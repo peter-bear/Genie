@@ -4,6 +4,7 @@ from typing import List, Optional
 import threading
 
 from ..Audio.ReferenceAudio import ReferenceAudio
+from ..Chinese.ChineseG2P import chinese_to_phones
 from ..Japanese.JapaneseG2P import japanese_to_phones
 from ..Utils.Constants import BERT_FEATURE_DIM
 
@@ -21,7 +22,8 @@ class GENIE:
             stage_decoder: ort.InferenceSession,
             vocoder: ort.InferenceSession,
     ) -> Optional[np.ndarray]:
-        text_seq: np.ndarray = np.array([japanese_to_phones(text)], dtype=np.int64)
+        # text_seq: np.ndarray = np.array([japanese_to_phones(text)], dtype=np.int64)
+        text_seq: np.ndarray = np.array([chinese_to_phones(text)], dtype=np.int64)
         text_bert = np.zeros((text_seq.shape[1], BERT_FEATURE_DIM), dtype=np.float32)
         semantic_tokens: np.ndarray = self.t2s_cpu(
             ref_seq=prompt_audio.phonemes_seq,

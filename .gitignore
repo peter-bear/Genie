@@ -36,3 +36,6 @@ wheels/
 .vscode/
 *.swp
 *.swo
+
+models/
+outputs/
